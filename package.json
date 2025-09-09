@@ -16,12 +16,14 @@
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.17.0",
+    "@strapi/plugin-seo": "^2.0.8",
     "@strapi/plugin-users-permissions": "5.17.0",
     "@strapi/strapi": "5.17.0",
     "better-sqlite3": "11.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
+    "strapi-plugin-webp-converter": "^1.0.4",
     "styled-components": "^6.0.0"
   },
   "devDependencies": {
@@ -38,5 +40,5 @@
     "uuid": "dcc4f08b-dea4-4555-b506-496889bfa5bf",
     "installId": "77b232489b22c2b22f081cd38f38e0a4998c5c641333e2b399cd596989987428"
   },
-  "packageManager": "pnpm@10.12.3+sha512.467df2c586056165580ad6dfb54ceaad94c5a30f80893ebdec5a44c5aa73c205ae4a5bb9d5ed6bb84ea7c249ece786642bbb49d06a307df218d03da41c317417"
+  "packageManager": "pnpm@10.15.1+sha512.34e538c329b5553014ca8e8f4535997f96180a1d0f614339357449935350d924e22f8614682191264ec33d1462ac21561aff97f6bb18065351c162c7e8f6de67"
 }

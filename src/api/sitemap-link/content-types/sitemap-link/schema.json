@@ -1,0 +1,40 @@
+{
+  "kind": "singleType",
+  "collectionName": "sitemap_links",
+  "info": {
+    "singularName": "sitemap-link",
+    "pluralName": "sitemap-links",
+    "displayName": "Sitemap-link"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "value": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "minLength": 1,
+      "required": true
+    },
+    "link": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "minLength": 1,
+      "required": true,
+      "unique": true
+    }
+  }
+}

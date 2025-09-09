@@ -1,0 +1,27 @@
+{
+  "kind": "singleType",
+  "collectionName": "test_mds",
+  "info": {
+    "singularName": "test-md",
+    "pluralName": "test-mds",
+    "displayName": "TestMD"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "content": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}
