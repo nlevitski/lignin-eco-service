@@ -5,4 +5,5 @@ export default ({ env }) => ({
 	app: {
 		keys: env.array('APP_KEYS'),
 	},
+	allowedHosts: ['localhost', '127.0.0.1', 'lignineco.com'],
 });
