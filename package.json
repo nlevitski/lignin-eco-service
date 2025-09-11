@@ -19,18 +19,22 @@
     "@strapi/plugin-seo": "^2.0.8",
     "@strapi/plugin-users-permissions": "5.17.0",
     "@strapi/strapi": "5.17.0",
+    "@strapi/provider-email-nodemailer": "^5.11.2",
     "better-sqlite3": "11.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
     "strapi-plugin-webp-converter": "^1.0.4",
-    "styled-components": "^6.0.0"
+    "styled-components": "^6.0.0",
+    "node-telegram-bot-api": "^0.66.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "typescript": "^5"
+    "@types/node-telegram-bot-api": "^0.64.7",
+    "typescript": "^5",
+    "vite": "^7.1.5"
   },
   "engines": {
     "node": ">=18.0.0 <=22.x.x",

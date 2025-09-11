@@ -1103,6 +1103,61 @@ export interface ApiSitemapLinkSitemapLink extends Struct.SingleTypeSchema {
   };
 }
 
+export interface ApiSitemapPageSitemapPage extends Struct.SingleTypeSchema {
+  collectionName: 'sitemap_pages';
+  info: {
+    displayName: 'Sitemap Page';
+    pluralName: 'sitemap-pages';
+    singularName: 'sitemap-page';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::sitemap-page.sitemap-page'
+    >;
+    path: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    publishedAt: Schema.Attribute.DateTime;
+    seo: Schema.Attribute.Component<'shared.seo', false> &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    title: Schema.Attribute.String &
+      Schema.Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiTestMdTestMd extends Struct.SingleTypeSchema {
   collectionName: 'test_mds';
   info: {
@@ -1663,6 +1718,7 @@ declare module '@strapi/strapi' {
       'api::product.product': ApiProductProduct;
       'api::section.section': ApiSectionSection;
       'api::sitemap-link.sitemap-link': ApiSitemapLinkSitemapLink;
+      'api::sitemap-page.sitemap-page': ApiSitemapPageSitemapPage;
       'api::test-md.test-md': ApiTestMdTestMd;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

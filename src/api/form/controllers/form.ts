@@ -22,31 +22,31 @@ module.exports = {
 			}
 
 			// Отправка письма на почту (если раскомментировано)
-			// try {
-			// 	await strapi.plugins['email'].services.email.send({
-			// 		to: 'alex.bizby@gmail.com',
-			// 		from: 'alexandrwolk86@yandex.ru',
-			// 		subject: 'Форма обратной связи',
-			// 		text: `Имя: ${formData.name}\nТелефон: ${formData.phone}\nEmail: ${formData.email}\nСообщение: ${formData.message}`,
-			// 		html: `<p>Имя: ${formData.name}</p><p>Телефон: ${formData.phone}</p><p>Email: ${formData.email}</p><p>Сообщение: ${formData.message}</p>`,
-			// 	});
-			// } catch (emailError) {
-			// 	console.error('Error sending emeail: ', emailError);
-			// 	ctx.status === 424;
-			// 	return;
-			// }
+			try {
+				await strapi.plugins['email'].services.email.send({
+					to: 'alex.bizby@gmail.com',
+					from: 'alexandrwolk86@yandex.ru',
+					subject: 'Форма обратной связи',
+					text: `Имя: ${formData.name}\nТелефон: ${formData.phone}\nEmail: ${formData.email}\nСообщение: ${formData.message}`,
+					html: `<p>👤 Имя: ${formData.name}</p><p>📱 Телефон: ${formData.phone}</p><p>📧 Email: ${formData.email}</p><p>💬 Сообщение: ${formData.message}</p>`,
+				});
+			} catch (emailError) {
+				console.error('Error sending emeail: ', emailError);
+				ctx.status === 424;
+				return;
+			}
 
 			// Отправка уведомления в Telegram
-			// try {
-			// 	await strapi.services['api::form.telegram'].sendNotification(formData);
-			// } catch (notificationError) {
-			// 	console.error('Error sending notification:', notificationError);
-			// 	// return ctx.badRequest('Ошибка при отправке уведомления', {
-			// 	// 	error: notificationError.message,
-			// 	// });
-			// 	ctx.status === 424;
-			// 	return;
-			// }
+			try {
+				await strapi.services['api::form.telegram'].sendNotification(formData);
+			} catch (notificationError) {
+				console.error('Error sending notification:', notificationError);
+				// return ctx.badRequest('Ошибка при отправке уведомления', {
+				// 	error: notificationError.message,
+				// });
+				ctx.status === 424;
+				return;
+			}
 			// try {
 			// 	await strapi.services['api::form.whatsapp'].sendMessage(formData);
 			// } catch (messageError) {
