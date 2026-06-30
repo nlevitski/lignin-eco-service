@@ -1,4 +1,4 @@
-import TelegramBot from 'node-telegram-bot-api';
+import TelegramBot from "node-telegram-bot-api";
 
 interface FormData {
 	email: string;
@@ -10,11 +10,11 @@ interface FormData {
 const TOKEN = process.env.TELEGRAM_TOKEN;
 const CHAT_ID = +process.env.TELEGRAM_GROUP_CHAT_ID;
 let bot: TelegramBot | null = null;
-console.log('TOKEN AND CHAT ID:', TOKEN, CHAT_ID);
+
 if (TOKEN && CHAT_ID) {
 	bot = new TelegramBot(TOKEN, { polling: false });
 } else {
-	console.warn('Telegram notification settings are missing');
+	console.warn("Telegram notification settings are missing");
 }
 
 export default {
@@ -26,7 +26,7 @@ export default {
 
 			return true;
 		} catch (error) {
-			console.error('Error sending Telegram notification:', error);
+			console.error("Error sending Telegram notification:", error);
 			return false;
 		}
 	},
