@@ -22,20 +22,22 @@ module.exports = {
 				return;
 			}
 
+			const fromEmail = process.env.RESEND_FROM_EMAIL;
+			const targetEmail = process.env.TARGET_EMAIL;
 			// Отправка письма на почту (если раскомментировано)
-			// try {
-			// 	await strapi.plugins['email'].services.email.send({
-			// 		to: 'alex.bizby@gmail.com',
-			// 		from: 'alexandrwolk86@yandex.ru',
-			// 		subject: 'Форма обратной связи',
-			// 		text: `Имя: ${formData.name}\nТелефон: ${formData.phone}\nEmail: ${formData.email}\nСообщение: ${formData.message}`,
-			// 		html: `<p>👤 Имя: ${formData.name}</p><p>📱 Телефон: ${formData.phone}</p><p>📧 Email: ${formData.email}</p><p>💬 Сообщение: ${formData.message}</p>`,
-			// 	});
-			// } catch (emailError) {
-			// 	console.error('Error sending emeail: ', emailError);
-			// 	ctx.status === 424;
-			// 	return;
-			// }
+			try {
+				await strapi.plugins["email"].services.email.send({
+					to: targetEmail,
+					from: fromEmail,
+					subject: "Форма обратной связи",
+					text: `Имя: ${formData.name}\nТелефон: ${formData.phone}\nEmail: ${formData.email}\nСообщение: ${formData.message}`,
+					html: `<p>👤 Имя: ${formData.name}</p><p>📱 Телефон: ${formData.phone}</p><p>📧 Email: ${formData.email}</p><p>💬 Сообщение: ${formData.message}</p>`,
+				});
+			} catch (emailError) {
+				console.error("Error sending emeail: ", emailError);
+				ctx.status = 424;
+				return;
+			}
 
 			// Отправка уведомления в Telegram
 			try {

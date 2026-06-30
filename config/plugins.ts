@@ -1,28 +1,28 @@
 export default ({ env }) => ({
 	email: {
 		config: {
-			provider: 'nodemailer',
+			provider: "nodemailer",
 			providerOptions: {
-				host: 'smtp.yandex.ru',
+				host: "smtp.resend.com",
 				port: 465,
 				secure: true,
 				// requireTLS: true,
 				// ignoreTLS: false,
 				auth: {
-					user: env('SMTP_AUTH_USER'),
-					pass: env('SMTP_AUTH_PASS'),
+					user: env("RESEND_SMTP_USER"),
+					pass: env("RESEND_API_KEY"),
 				},
 			},
 			settings: {
-				defaultFrom: env('SMTP_AUTH_USER'),
-				defaultReplyTo: env('SMTP_AUTH_USER'),
+				defaultFrom: env("RESEND_FROM_EMAIL"),
+				defaultReplyTo: env("RESEND_FROM_EMAIL"),
 			},
 		},
 	},
-	'webp-converter': {
+	"webp-converter": {
 		enabled: true,
 		config: {
-			mimeTypes: ['image/png', 'image/jpeg', 'image/jpg'],
+			mimeTypes: ["image/png", "image/jpeg", "image/jpg"],
 		},
 	},
 	seo: {
