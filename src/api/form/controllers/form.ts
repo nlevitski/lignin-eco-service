@@ -49,7 +49,7 @@ module.exports = {
 				// return ctx.badRequest('Ошибка при отправке уведомления', {
 				// 	error: notificationError.message,
 				// });
-				ctx.status === 424;
+				ctx.status = 424;
 				return;
 			}
 			// try {
