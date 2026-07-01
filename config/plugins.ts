@@ -3,19 +3,19 @@ export default ({ env }) => ({
 		config: {
 			provider: "nodemailer",
 			providerOptions: {
-				host: "smtp.resend.com",
+				host: env("SMTP_HOST"),
 				port: 465,
 				secure: true,
 				// requireTLS: true,
 				// ignoreTLS: false,
 				auth: {
-					user: env("RESEND_SMTP_USER"),
-					pass: env("RESEND_API_KEY"),
+					user: env("SMTP_USER"),
+					pass: env("SMTP_API_KEY"),
 				},
 			},
 			settings: {
-				defaultFrom: env("RESEND_FROM_EMAIL"),
-				defaultReplyTo: env("RESEND_FROM_EMAIL"),
+				defaultFrom: env("SMTP_FROM_EMAIL"),
+				defaultReplyTo: env("SMTP_FROM_EMAIL"),
 			},
 		},
 	},
