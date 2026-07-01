@@ -81,34 +81,37 @@ module.exports = {
 				return;
 			}
 
-			// Если только email не удался
+			// Формируем сообщение о статусе отправки
+			let statusMessage = "Форма успешно отправлена! ";
+
 			if (hasEmailError) {
-				ctx.status = 424;
-				ctx.body = {
-					message: "Ошибка при отправке email",
-					error: emailResult.reason?.message || "Unknown email error",
-				};
-				return;
+				statusMessage += "(Email не отправлен) ";
 			}
-
-			// Если только telegram не удался
 			if (hasTelegramError) {
-				ctx.status = 424;
-				ctx.body = {
-					message: "Ошибка при отправке уведомления в Telegram",
-					error:
-						telegramResult.reason?.message ||
-						"Unknown telegram error",
-				};
-				return;
+				statusMessage += "(Telegram не отправлен) ";
 			}
 
-			// Оба успешно выполнены
+			// Если хотя бы одна отправка успешна, возвращаем положительный ответ
 			return ctx.send({
-				message: `Форма успешно отправлена! ${new Date().toLocaleTimeString(
+				message: `${statusMessage}${new Date().toLocaleTimeString(
 					"ru-RU",
 				)}`,
 				data: formData,
+				status: {
+					email: hasEmailError ? "failed" : "success",
+					telegram: hasTelegramError ? "failed" : "success",
+				},
+				warnings:
+					hasEmailError || hasTelegramError
+						? {
+								email: hasEmailError
+									? "Не удалось отправить email"
+									: null,
+								telegram: hasTelegramError
+									? "Не удалось отправить уведомление в Telegram"
+									: null,
+							}
+						: null,
 			});
 		} catch (error) {
 			ctx.status = 424;
