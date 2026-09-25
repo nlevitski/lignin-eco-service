@@ -89,15 +89,21 @@ jobs:
 
           container_id="$(docker compose ps -q lignineco-strapi)"
           test -n "$container_id"
+          show_diagnostics() {
+            docker compose ps || true
+            docker compose logs --no-color --tail=100 lignineco-strapi || true
+            docker inspect --format '{{range .State.Health.Log}}{{println .Output}}{{end}}' "$container_id" || true
+            ls -ldn .tmp .tmp/data.db public/uploads 2>/dev/null || true
+          }
           for attempt in $(seq 1 36); do
             health="$(docker inspect --format '{{.State.Health.Status}}' "$container_id")"
             case "$health" in
               healthy) docker compose ps; exit 0 ;;
-              unhealthy) echo 'Strapi container is unhealthy' >&2; exit 1 ;;
+              unhealthy) echo 'Strapi container is unhealthy' >&2; show_diagnostics; exit 1 ;;
             esac
             sleep 5
           done
           echo 'Strapi did not become healthy in time' >&2
-          docker compose ps
+          show_diagnostics
           exit 1
           REMOTE

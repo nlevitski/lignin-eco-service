@@ -44,16 +44,21 @@ Prepare the two bind-mounted data directories before the first start:
 ```sh
 mkdir -p .tmp public/uploads
 docker network inspect lignin
-docker compose build
-docker compose up -d
 ```
 
 If `lignin` does not exist yet, create it once with `docker network create lignin`.
 
 The container runs as UID 1000 (`node`), which needs write access to `.tmp` and
 `public/uploads`. On a Linux host, adjust these directories' ownership if needed.
-Copy any existing SQLite database and uploaded files into those directories
-before starting this service.
+The GitHub Actions workflow does not transfer the SQLite database or uploaded
+files. When moving from the old VPS, transfer the production database once to
+`~/lignineco/service/.tmp/data.db` on the new VPS and the matching uploads to
+`~/lignineco/service/public/uploads/`, before the first deployment. Find the
+actual database and uploads paths on the old VPS from that container's mounts.
+Create a consistent snapshot of a live SQLite database with `sqlite3`'s
+`.backup` command before transferring it. Make the destination writable by UID
+1000, then start the service with `docker compose up -d --build`. Later
+deployments leave both directories on the new VPS untouched.
 
 Traefik reaches the container on port 1337 through the external `lignin` network.
 Compose does not publish a host port, so another container may also use port 1337.
@@ -72,7 +77,9 @@ by `rsync --delete`.
 `VPS_SSH_KEY` must be a private key authorized for `VPS_USER` on that VPS.
 The VPS must already have Docker Compose, `rsync`, the external `lignin`
 network, a nonempty `.env`, and writable data directories. `VPS_USER` also
-needs permission to run Docker and write to `VPS_PATH`.
+needs permission to run Docker and write to `VPS_PATH`. Transfer the production
+database and uploads before triggering the first deployment: otherwise Strapi
+will create a fresh empty SQLite database.
 
 ## 📚 Learn more
 
