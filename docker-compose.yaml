@@ -1,18 +1,42 @@
-# services:
-#   lignineco-prod:
-#     build:
-#       context: .
-#       target: production
-#     env_file: .env
-#     environment:
-#       NODE_ENV: production
-#     ports:
-#       - "1337:1337"
-#     volumes:
-#       - ./.tmp:/app/.tmp
-#     networks:
-#       - lignineco
+name: lignineco-service
 
-# networks:
-#   lignineco:
-#     external: true
+services:
+  lignineco-strapi:
+    build:
+      context: .
+      target: production
+      args:
+        STRAPI_PUBLIC_URL: https://lignineco.com
+    image: lignineco-strapi:5.55.1
+    restart: unless-stopped
+    init: true
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: "1337"
+      PUBLIC_URL: https://lignineco.com
+      PROXY_KOA: "true"
+    volumes:
+      - ./.tmp:/app/.tmp
+      - ./public/uploads:/app/public/uploads
+    networks:
+      - lignin
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: lignin
+      traefik.http.routers.lignineco-strapi.rule: "Host(`lignineco.com`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/uploads`) || PathPrefix(`/content-manager`) || PathPrefix(`/content-type-builder`) || PathPrefix(`/users-permissions`) || PathPrefix(`/email`) || PathPrefix(`/upload`))"
+      traefik.http.routers.lignineco-strapi.entrypoints: websecure
+      traefik.http.routers.lignineco-strapi.tls.certresolver: le
+      traefik.http.services.lignineco-strapi.loadbalancer.server.port: "1337"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:1337/_health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      start_period: 90s
+      retries: 3
+
+networks:
+  lignin:
+    external: true
+    name: lignin

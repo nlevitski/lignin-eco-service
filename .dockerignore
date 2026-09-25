@@ -1,0 +1,12 @@
+.git
+.github
+.env
+.env.*
+.strapi
+.tmp
+node_modules
+dist
+build
+public/uploads
+*.log
+.DS_Store

@@ -1,5 +1,12 @@
 # 🚀 Getting started with Strapi
 
+This project uses Node.js 24 and pnpm 10. With `fnm` installed, run:
+
+```sh
+fnm use
+pnpm install --frozen-lockfile
+```
+
 Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
 
 ### `develop`
@@ -7,9 +14,7 @@ Strapi comes with a full featured [Command Line Interface](https://docs.strapi.i
 Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
 
 ```
-npm run develop
-# or
-yarn develop
+pnpm dev
 ```
 
 ### `start`
@@ -17,9 +22,7 @@ yarn develop
 Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
 
 ```
-npm run start
-# or
-yarn start
+pnpm start
 ```
 
 ### `build`
@@ -27,18 +30,49 @@ yarn start
 Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
 
 ```
-npm run build
-# or
-yarn build
+pnpm build
 ```
 
-## ⚙️ Deployment
+## Docker deployment
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+The production image uses Node.js 24 and builds the Strapi admin panel for
+`https://lignineco.com`. Set the required secrets in `.env` on the Docker host;
+the file is excluded from the image.
 
+Prepare the two bind-mounted data directories before the first start:
+
+```sh
+mkdir -p .tmp public/uploads
+docker network inspect lignin
+docker compose build
+docker compose up -d
 ```
-yarn strapi deploy
-```
+
+If `lignin` does not exist yet, create it once with `docker network create lignin`.
+
+The container runs as UID 1000 (`node`), which needs write access to `.tmp` and
+`public/uploads`. On a Linux host, adjust these directories' ownership if needed.
+Copy any existing SQLite database and uploaded files into those directories
+before starting this service.
+
+Traefik reaches the container on port 1337 through the external `lignin` network.
+Compose does not publish a host port, so another container may also use port 1337.
+Do not run this Compose service alongside `pnpm start` against the same SQLite
+file. Traefik routes only the Strapi paths; the frontend needs its own router.
+
+### GitHub Actions deployment
+
+The `Deploy` workflow runs after a push to `main` or from the Actions tab. It
+uses the repository secrets `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY`, and `VPS_PATH`.
+`VPS_PATH` may be an absolute path or start with `~/`, for example
+`~/lignineco/service`. The workflow copies this commit to the VPS, preserves
+`.env`, `.tmp`, `public/uploads`, and `backups`, then builds and starts Compose.
+Other files under `VPS_PATH` that are absent from the repository are removed
+by `rsync --delete`.
+`VPS_SSH_KEY` must be a private key authorized for `VPS_USER` on that VPS.
+The VPS must already have Docker Compose, `rsync`, the external `lignin`
+network, a nonempty `.env`, and writable data directories. `VPS_USER` also
+needs permission to run Docker and write to `VPS_PATH`.
 
 ## 📚 Learn more
 

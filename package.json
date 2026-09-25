@@ -15,12 +15,12 @@
     "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.49.0",
+    "@strapi/plugin-cloud": "5.55.1",
     "@strapi/plugin-seo": "^2.0.9",
-    "@strapi/plugin-users-permissions": "5.49.0",
-    "@strapi/strapi": "5.49.0",
-    "@strapi/provider-email-nodemailer": "5.49.0",
-    "better-sqlite3": "11.3.0",
+    "@strapi/plugin-users-permissions": "5.55.1",
+    "@strapi/strapi": "5.55.1",
+    "@strapi/provider-email-nodemailer": "5.55.1",
+    "better-sqlite3": "12.6.0",
     "node-telegram-bot-api": "^1.1.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
@@ -29,14 +29,14 @@
     "styled-components": "^6.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "^24",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "typescript": "^5",
     "vite": "^7.1.5"
   },
   "engines": {
-    "node": ">=18.0.0 <=22.x.x",
+    "node": ">=24.0.0 <25.0.0",
     "npm": ">=6.0.0"
   },
   "strapi": {
