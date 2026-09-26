@@ -52,7 +52,7 @@ export interface SharedSeo extends Struct.ComponentSchema {
 }
 
 declare module "@strapi/strapi" {
-	export module Public {
+	export namespace Public {
 		export interface ComponentSchemas {
 			"shared.open-graph": SharedOpenGraph;
 			"shared.seo": SharedSeo;
