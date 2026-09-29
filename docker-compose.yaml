@@ -25,7 +25,7 @@ services:
     labels:
       traefik.enable: "true"
       traefik.docker.network: lignin
-      traefik.http.routers.lignineco-strapi.rule: "Host(`lignineco.com`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/uploads`) || PathPrefix(`/content-manager`) || PathPrefix(`/content-type-builder`) || PathPrefix(`/users-permissions`) || PathPrefix(`/email`) || PathPrefix(`/upload`))"
+      traefik.http.routers.lignineco-strapi.rule: "Host(`lignineco.com`) && (PathPrefix(`/admin`) || PathPrefix(`/api`) || PathPrefix(`/uploads`) || PathPrefix(`/content-manager`) || PathPrefix(`/content-type-builder`) || PathPrefix(`/users-permissions`) || PathPrefix(`/email`) || PathPrefix(`/upload`) || PathPrefix(`/i18n`))"
       traefik.http.routers.lignineco-strapi.entrypoints: websecure
       traefik.http.routers.lignineco-strapi.tls.certresolver: le
       traefik.http.services.lignineco-strapi.loadbalancer.server.port: "1337"
